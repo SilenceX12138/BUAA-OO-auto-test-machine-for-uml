@@ -78,7 +78,6 @@ def gene_state_data(state_machine_name_list=[], state_name_list=[]):
 
 
 def get_state_data(info_seq=0):
-    get_state_info(info_seq)
     state_machine_name_list, state_name_list = get_state_pedia(info_seq)
     state_data = gene_state_data(state_machine_name_list, state_name_list)
     return state_data

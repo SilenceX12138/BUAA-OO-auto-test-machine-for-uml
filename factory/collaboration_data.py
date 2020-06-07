@@ -76,7 +76,6 @@ def gene_collaboration_data(interaction_name_list=[], lifeline_name_list=[]):
 
 
 def get_collaboration_data(info_seq=0):
-    get_collaboration_info(info_seq)
     interaction_name_list, lifeline_name_list = get_collaboration_pedia(
         info_seq)
     collaboration_data = gene_collaboration_data(interaction_name_list,
