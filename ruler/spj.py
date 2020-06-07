@@ -62,6 +62,13 @@ def cmp_judge(data_file, output_file, template_file):
             if (r):
                 return "line " + str(
                     i + 1) + " has problem with request: " + input_list[i]
+        elif (output_list[i].find("operation visibility") != -1):
+            output_list[i] = output_list[i].replace(' ', '')
+            template_list[i] = template_list[i].replace(' ', '')
+            r = (output_list[i] != template_list[i])
+            if (r):
+                return "line " + str(
+                    i + 1) + " has problem with request: " + input_list[i]
         elif (output_list[i] != template_list[i]):
             return "line " + str(
                 i + 1) + " has problem with request: " + input_list[i]
@@ -82,6 +89,6 @@ if __name__ == "__main__":
     #               "./output/saber/output" + str(i) + ".txt",
     #               "./template/template4.txt")
     #     print(i, r)
-    r = check("./data/testcase0.txt", "./output/basic/output0.txt",
-              "./template/template0.txt")
+    r = check("./data/testcase0.txt", "./output/general/output6.txt",
+              "./template/template6.txt")
     print(r)

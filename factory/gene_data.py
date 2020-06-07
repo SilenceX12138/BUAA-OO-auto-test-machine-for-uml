@@ -11,6 +11,8 @@ from arrangement_data import get_arrangement_data
 from name_data import get_name_data
 from single_data import get_single_data
 from traverse_data import get_traverse_data
+from state_data import get_state_data
+from collaboration_data import get_collaboration_data
 
 
 def get_info():
@@ -34,8 +36,8 @@ def get_info():
         i += 1
 
 
-def get_data(count=10, info_seq=0):
-    data = []
+def get_class_data(count=10, info_seq=0):
+    class_data = []
     normal_data = []
     interfere_data = []
 
@@ -48,11 +50,10 @@ def get_data(count=10, info_seq=0):
     traverse_data = get_traverse_data(class_dic)
 
     normal_data = arrangement_data + name_data + single_data + traverse_data
-    data = normal_data + interfere_data
-    random.shuffle(data)
+    class_data = normal_data + interfere_data
+    random.shuffle(class_data)
 
-    return data
-
+    return class_data
 
 def gene_data(case_count=10):
     if (os.path.exists("./data")):
@@ -60,6 +61,7 @@ def gene_data(case_count=10):
     os.mkdir("./data")
     get_info()
     total_count = 0
+    data_list = []
     info_count = len(os.listdir("./factory/classinfo"))
     per_case_count = case_count // info_count + 1
     for i in range(info_count):
@@ -69,7 +71,9 @@ def gene_data(case_count=10):
                           "r") as f_info:
                     builder_data = f_info.readlines()
                 f.writelines(builder_data)
-                data_list = get_data(info_seq=i)
+                data_list.extend(get_class_data(info_seq=i))
+                data_list.extend(get_state_data(info_seq=i))
+                data_list.extend(get_collaboration_data(info_seq=i))
                 for data in data_list:
                     f.writelines(data + "\n")
             total_count += 1
