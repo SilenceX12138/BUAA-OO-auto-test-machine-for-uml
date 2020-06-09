@@ -28,19 +28,19 @@ def get_two_state_data(interaction_name_list=[], lifeline_name_list=[]):
 
 def get_collaboration_info(info_seq=0):
     uml_files = []
-    uml_files = os.listdir("./factory/uml")
+    uml_files = os.listdir("./factory/umlinfo")
     i = 0
     for uml_file in uml_files:
-        os.system(
-            "java -jar ./factory/uml-homework.jar dump -s ./factory/uml/" +
-            uml_file + " -n Model -t UMLModel > ./factory/umlinfo/umlinfo" +
-            str(i) + ".txt")
-        lines = []
-        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
-            lines = f.readlines()
-        lines.append("END_OF_MODEL\n")
-        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
-            f.writelines(lines)
+        # os.system(
+        #     "java -jar ./factory/uml-homework.jar dump -s ./factory/uml/" +
+        #     uml_file + " -n Model -t UMLModel > ./factory/umlinfo/umlinfo" +
+        #     str(i) + ".txt")
+        # lines = []
+        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
+        #     lines = f.readlines()
+        # lines.append("END_OF_MODEL\n")
+        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
+        #     f.writelines(lines)
         os.system(
             "java -jar ./factory/collaboration-info-extractor.jar < ./factory/umlinfo/umlinfo"
             + str(i) + ".txt > ./factory/collaborationinfo/info" + str(i) +
@@ -52,7 +52,8 @@ def get_collaboration_pedia(info_seq=0):
     interaction_name_list = []
     lifeline_name_list = []
 
-    with open("./factory/collaborationinfo/info" + str(info_seq) + ".txt", 'r') as f:
+    with open("./factory/collaborationinfo/info" + str(info_seq) + ".txt",
+              'r') as f:
         lines = f.readlines()
         for line in lines:
             if (line.find("interaction") != -1):
@@ -84,4 +85,5 @@ def get_collaboration_data(info_seq=0):
 
 
 if __name__ == "__main__":
-    print(get_collaboration_data(0))
+    # print(get_collaboration_data(0))
+    get_collaboration_info(0)

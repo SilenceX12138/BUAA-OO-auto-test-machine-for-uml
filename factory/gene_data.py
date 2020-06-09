@@ -17,19 +17,19 @@ from collaboration_data import get_collaboration_data, get_collaboration_info
 
 def get_info():
     uml_files = []
-    uml_files = os.listdir("./factory/uml")
+    uml_files = os.listdir("./factory/umlinfo")
     i = 0
     for uml_file in uml_files:
-        os.system(
-            "java -jar ./factory/uml-homework-1.0.0-raw-jar-with-dependencies.jar dump -s ./factory/uml/"
-            + uml_file + " -n Model > ./factory/umlinfo/umlinfo" + str(i) +
-            ".txt")
-        lines = []
-        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
-            lines = f.readlines()
-        lines.append("END_OF_MODEL\n")
-        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
-            f.writelines(lines)
+        # os.system(
+        #     "java -jar ./factory/uml-homework-1.0.0-raw-jar-with-dependencies.jar dump -s ./factory/uml/"
+        #     + uml_file + " -n Model > ./factory/umlinfo/umlinfo" + str(i) +
+        #     ".txt")
+        # lines = []
+        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
+        #     lines = f.readlines()
+        # lines.append("END_OF_MODEL\n")
+        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
+        #     f.writelines(lines)
         os.system(
             "java -jar ./factory/class-info-extractor.jar < ./factory/umlinfo/umlinfo"
             + str(i) + ".txt > ./factory/classinfo/info" + str(i) + ".txt")
@@ -58,11 +58,18 @@ def get_class_data(class_dic={}, count=10, info_seq=0):
 def gene_data(case_count=10):
     if (os.path.exists("./data")):
         shutil.rmtree("./data")
+        shutil.rmtree("./factory/classinfo")
+        shutil.rmtree("./factory/stateinfo")
+        shutil.rmtree("./factory/collaborationinfo")
     os.mkdir("./data")
+    os.mkdir("./factory/classinfo")
+    os.mkdir("./factory/stateinfo")
+    os.mkdir("./factory/collaborationinfo")
     get_info()
     total_count = 0
     data_list = []
-    info_count = len(os.listdir("./factory/uml"))
+    info_count = max(len(os.listdir("./factory/uml")),
+                     len(os.listdir("./factory/umlinfo")))
     per_case_count = case_count // info_count + 1
     for i in range(info_count):
         class_dic = get_class_dic(info_seq=i)
@@ -85,3 +92,4 @@ def gene_data(case_count=10):
 
 if __name__ == "__main__":
     gene_data()
+    # get_info()

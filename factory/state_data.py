@@ -31,19 +31,19 @@ def get_two_state_data(state_machine_name_list=[], state_name_list=[]):
 
 def get_state_info(info_seq=0):
     uml_files = []
-    uml_files = os.listdir("./factory/uml")
+    uml_files = os.listdir("./factory/umlinfo")
     i = 0
     for uml_file in uml_files:
-        os.system(
-            "java -jar ./factory/uml-homework.jar dump -s ./factory/uml/" +
-            uml_file + " -n Model -t UMLModel > ./factory/umlinfo/umlinfo" +
-            str(i) + ".txt")
-        lines = []
-        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
-            lines = f.readlines()
-        lines.append("END_OF_MODEL\n")
-        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
-            f.writelines(lines)
+        # os.system(
+        #     "java -jar ./factory/uml-homework.jar dump -s ./factory/uml/" +
+        #     uml_file + " -n Model -t UMLModel > ./factory/umlinfo/umlinfo" +
+        #     str(i) + ".txt")
+        # lines = []
+        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
+        #     lines = f.readlines()
+        # lines.append("END_OF_MODEL\n")
+        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
+        #     f.writelines(lines)
         os.system(
             "java -jar ./factory/state-info-extractor.jar < ./factory/umlinfo/umlinfo"
             + str(i) + ".txt > ./factory/stateinfo/info" + str(i) + ".txt")
@@ -84,4 +84,5 @@ def get_state_data(info_seq=0):
 
 
 if __name__ == "__main__":
-    print(get_state_data(0))
+    # print(get_state_data(0))
+    get_state_info(0)
