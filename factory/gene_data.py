@@ -73,7 +73,6 @@ def gene_data(case_count=10):
     os.mkdir("./factory/collaborationinfo")
     get_info()
     total_count = 0
-    data_list = []
     info_count = max(len(os.listdir("./factory/uml")),
                      len(os.listdir("./factory/umlinfo")))
     per_case_count = case_count // info_count + 1
@@ -87,6 +86,7 @@ def gene_data(case_count=10):
                           "r") as f_info:
                     builder_data = f_info.readlines()
                 f.writelines(builder_data)
+                data_list = []
                 data_list.extend(
                     get_class_data(class_dic=class_dic, info_seq=i))
                 data_list.extend(get_state_data(info_seq=i))
@@ -97,5 +97,5 @@ def gene_data(case_count=10):
 
 
 if __name__ == "__main__":
-    # gene_data()
-    get_info()
+    gene_data()
+    # get_info()
