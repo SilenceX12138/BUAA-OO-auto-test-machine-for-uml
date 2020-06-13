@@ -6,30 +6,36 @@ import sys
 path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(path + "./factory")
 
-from class_extractor import get_class_dic
 from arrangement_data import get_arrangement_data
+from class_extractor import get_class_dic
+from collaboration_data import get_collaboration_data, get_collaboration_info
 from name_data import get_name_data
 from single_data import get_single_data
-from traverse_data import get_traverse_data
 from state_data import get_state_data, get_state_info
-from collaboration_data import get_collaboration_data, get_collaboration_info
+from traverse_data import get_traverse_data
 
 
 def get_info():
     uml_files = []
-    uml_files = os.listdir("./factory/umlinfo")
+    uml_files = os.listdir("./factory/uml")
     i = 0
+    if (os.path.exists("./factory/classinfo")):
+        shutil.rmtree("./factory/classinfo")
+    if (os.path.exists("./factory/umlinfo")):
+        shutil.rmtree("./factory/umlinfo")
+    os.mkdir("./factory/classinfo")
+    os.mkdir("./factory/umlinfo")
     for uml_file in uml_files:
-        # os.system(
-        #     "java -jar ./factory/uml-homework-1.0.0-raw-jar-with-dependencies.jar dump -s ./factory/uml/"
-        #     + uml_file + " -n Model > ./factory/umlinfo/umlinfo" + str(i) +
-        #     ".txt")
-        # lines = []
-        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
-        #     lines = f.readlines()
-        # lines.append("END_OF_MODEL\n")
-        # with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
-        #     f.writelines(lines)
+        os.system(
+            "java -jar ./factory/uml-homework.jar dump -s ./factory/uml/" +
+            uml_file + " -n Model -t UMLModel > ./factory/umlinfo/umlinfo" +
+            str(i) + ".txt")
+        lines = []
+        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "r") as f:
+            lines = f.readlines()
+        lines.append("END_OF_MODEL\n")
+        with open("./factory/umlinfo/umlinfo" + str(i) + ".txt", "w") as f:
+            f.writelines(lines)
         os.system(
             "java -jar ./factory/class-info-extractor.jar < ./factory/umlinfo/umlinfo"
             + str(i) + ".txt > ./factory/classinfo/info" + str(i) + ".txt")
@@ -91,5 +97,5 @@ def gene_data(case_count=10):
 
 
 if __name__ == "__main__":
-    gene_data()
-    # get_info()
+    # gene_data()
+    get_info()
